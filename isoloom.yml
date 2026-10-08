@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# VulnerableLightApp (by Michael Vacarella, Aif4thah) as an Isoloom spec: the upstream .NET source,
+# vendored unchanged in build/web/app/, built by its Dockerfile with the SDK pinned and the
+# restore done at build. The API answers over HTTPS (self-signed). `isoloom generate`, then
+# `isoloom up docker`.
+version: 1
+name: vulnerable-light-app
+
+networks:
+  lab: { cidr: 10.60.33.0/24, internet: false }
+
+machines:
+  web:
+    networks: { lab: 10 }
+    services: [{ port: 3000, name: https, publish: 3033 }]
+    resources: { cpus: 1, memory_mb: 1024 }
+    docker:
+      build: build/web
+
+checks:
+  - name: the API answers over HTTPS (401 "START HACKING" without a token)
+    http: https://web:3000/
+    expect: 401
+    wait: 240
+  - name: the OpenAPI document lists the lab endpoints
+    script: checks/openapi.sh
+  - name: the Swagger UI is served
+    http: https://web:3000/swagger/index.html
+
+message: |
+  VulnerableLightApp answers over HTTPS (self-signed certificate) at
+  https://localhost:{{ machines.web.services.0.publish }}/ (curl -k). The endpoints are listed in
+  Swagger at /swagger; most need a JWT from POST /Login. Hints: upstream's Dojo-101.
