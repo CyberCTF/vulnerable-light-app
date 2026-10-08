@@ -16,7 +16,7 @@ pinned and the packages restored at build.
 
 ```bash
 isoloom generate
-isoloom up docker
+isoloom run docker
 ```
 
 Then call https://localhost:3033/ (self-signed certificate: `curl -k`). Every endpoint except
