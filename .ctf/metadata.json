@@ -4,6 +4,5 @@
   "question": "Get a token from the API, then exploit as many of its vulnerabilities as you can.",
   "category": "WEB",
   "difficulty": 3,
-  "evidence_kind": "SECRET",
-  "capabilities": ["sql-injection", "jwt-attacks", "insecure-deserialization", "xxe", "ssrf", "command-injection"]
+  "evidence_kind": "SECRET"
 }
