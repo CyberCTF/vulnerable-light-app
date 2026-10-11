@@ -1,7 +1,7 @@
 {
   "title": "VulnerableLightApp",
   "description": "VulnerableLightApp: a deliberately vulnerable .NET 10 REST and GraphQL API with about thirty CWE-mapped flaws, from SQL injection, XXE and insecure deserialization to JWT forgery, SSRF, command injection and a backdoor.",
-  "question": "Get a token from the API, then exploit as many of its vulnerabilities as you can.",
+  "question": "Use the API's arbitrary file read (or its command injection) to read /ctf/flag on the server.",
   "category": "WEB",
   "difficulty": 3,
   "evidence_kind": "SECRET"

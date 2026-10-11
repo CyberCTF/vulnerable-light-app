@@ -1,0 +1,35 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Make the API read a file of your choosing from the server's disk (or run a command on it), and get /ctf/flag.",
+      "check": { "evidence": "SECRET", "format": "FLAG{%s}" },
+      "dev": "FLAG{dev-vulnerable-light-app}",
+      "hints": [
+        "The home endpoint greets you in a language picked by a query string parameter: where does the greeting text come from?",
+        "The parameter is treated as a file name, and the only defence strips one traversal sequence. Is a relative path even needed?"
+      ],
+      "steps": [
+        {
+          "key": "parameter",
+          "title": "Find the input",
+          "prompt": "Which query string parameter of the root endpoint names the file that is read?",
+          "check": { "answer": ["lang"] }
+        },
+        {
+          "key": "class",
+          "title": "Name the flaw",
+          "prompt": "Which vulnerability class lets a file name escape the folder the developer intended?",
+          "check": { "answer": ["path traversal", "directory traversal", "local file inclusion", "arbitrary file read", "lfi"] }
+        },
+        {
+          "key": "alternative",
+          "title": "Another way in",
+          "prompt": "Which endpoint listed in Swagger hands its input to /bin/sh? (its path)",
+          "check": { "answer": ["/localdnsresolver", "localdnsresolver"] }
+        }
+      ]
+    }
+  ]
+}
